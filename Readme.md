@@ -1,4 +1,4 @@
-# Point of Sale (POS) System
+# Point of Sale (POS) System [![Netlify Status](https://api.netlify.com/api/v1/badges/9d7ea836-6e7f-4b28-b177-052335036abf/deploy-status)](https://app.netlify.com/sites/smart-pos-dinidu/deploys)
 ```Smart your own Point of Sale (POS) system is designed to help you manage sales, customers, and invoices efficiently.```
 
 ## Tech Stack
