@@ -6,19 +6,11 @@ $(document).ready(function() {
     // Navigation: Handle sidebar menu clicks
     $('.sidebar-menu li').click(function() {
         const pageId = $(this).data('page');
-
-        // Update sidebar active state
         $('.sidebar-menu li').removeClass('active');
         $(this).addClass('active');
-
-        // Show corresponding page
         $('.page-section').removeClass('active').hide();
         $('#' + pageId).addClass('active').show();
-
-        // Save active page to localStorage
         localStorage.setItem('activePageId', pageId);
-
-        // Close sidebar on mobile
         if ($(window).width() < 768) {
             $('#sidebar').removeClass('active');
             $('#content').removeClass('active');
@@ -82,7 +74,6 @@ $(document).ready(function() {
         const email = $('#customerEmail').val();
         const phone = $('#customerPhone').val();
         if (id) {
-            // Update customer
             if (CustomerController.updateCustomer(id, name, email, phone, '')) {
                 $('#addCustomerModal').modal('hide');
                 $('#customerForm')[0].reset();
@@ -93,7 +84,6 @@ $(document).ready(function() {
                 updateDashboard();
             }
         } else {
-            // Add customer
             if (CustomerController.addCustomer(name, email, phone, '')) {
                 $('#addCustomerModal').modal('hide');
                 $('#customerForm')[0].reset();
@@ -176,7 +166,6 @@ $(document).ready(function() {
         const price = $('#itemPrice').val();
         const stock = $('#itemStock').val();
         if (code) {
-            // Update item
             if (ItemController.updateItem(code, name, category, price, stock, '')) {
                 $('#addItemModal').modal('hide');
                 $('#itemForm')[0].reset();
@@ -187,7 +176,6 @@ $(document).ready(function() {
                 updateDashboard();
             }
         } else {
-            // Add item
             if (ItemController.addItem(name, category, price, stock, '')) {
                 $('#addItemModal').modal('hide');
                 $('#itemForm')[0].reset();
@@ -239,7 +227,7 @@ $(document).ready(function() {
     });
 
     // Order Management
-    function renderOrders(updateTable = true) {
+    function renderOrders(updateTable = true, preserveItems = false) {
         if (updateTable) {
             const orders = OrderController.getAllOrders();
             const tbody = $('#orderTableBody');
@@ -290,26 +278,27 @@ $(document).ready(function() {
             }
         });
 
-        // Add one item row if none exist
-        if ($('#orderItemsTable tbody tr').length === 0) {
+        // Add one item row if none exist and not preserving items
+        if (!preserveItems && $('#orderItemsTable tbody tr').length === 0) {
             $('#orderItemsTable tbody').empty().append(getOrderItemRow(items));
         }
     }
 
-    function getOrderItemRow(items) {
+    function getOrderItemRow(items, selectedItem = null, quantity = 1) {
+        const price = selectedItem ? ItemController.getItemByCode(selectedItem.code)?.price || 0 : 0;
         return `
             <tr>
                 <td>
                     <select class="form-select item-select">
-                        <option value="" selected disabled>Select item</option>
-                        ${items.map(i => `<option value="${i.code}" data-price="${i.price}">${i.name}</option>`).join('')}
+                        <option value="" ${!selectedItem ? 'selected' : ''} disabled>Select item</option>
+                        ${items.map(i => `<option value="${i.code}" data-price="${i.price}" ${selectedItem && i.code === selectedItem.code ? 'selected' : ''}>${i.name}</option>`).join('')}
                     </select>
                 </td>
-                <td class="item-price">$0.00</td>
+                <td class="item-price">$${price.toFixed(2)}</td>
                 <td>
-                    <input type="number" class="form-control item-quantity" value="1" min="1">
+                    <input type="number" class="form-control item-quantity" value="${quantity}" min="1">
                 </td>
-                <td class="item-total">$0.00</td>
+                <td class="item-total">$${(price * quantity).toFixed(2)}</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-danger remove-item">
                         <i class="fas fa-trash"></i>
@@ -383,7 +372,6 @@ $(document).ready(function() {
 
         const id = $('#orderForm').data('edit-id');
         if (id) {
-            // Update order
             if (OrderController.updateOrder(id, customer, date, orderItems, 'Pending', '')) {
                 $('#newOrderModal').modal('hide');
                 $('#orderForm')[0].reset();
@@ -393,7 +381,6 @@ $(document).ready(function() {
                 updateDashboard();
             }
         } else {
-            // Add order
             if (OrderController.addOrder(customer, date, orderItems, '')) {
                 $('#newOrderModal').modal('hide');
                 $('#orderForm')[0].reset();
@@ -407,10 +394,23 @@ $(document).ready(function() {
         const id = $(this).data('id');
         const order = OrderController.getOrderById(id);
         if (order) {
+            // Set customer and date
             $('#orderCustomer').val([...$('#orderCustomer option')].find(o => o.text === order.customer)?.value || '');
             $('#orderDate').val(order.date);
             $('#newOrderModalLabel').text('Edit Order');
             $('#orderForm').data('edit-id', id);
+
+            // Populate order items
+            const items = ItemController.getAllItems();
+            $('#orderItemsTable tbody').empty();
+            order.items.forEach(item => {
+                $('#orderItemsTable tbody').append(getOrderItemRow(items, item, item.quantity));
+            });
+
+            // Calculate totals
+            calculateOrderTotal();
+
+            // Show modal
             $('#newOrderModal').modal('show');
         }
     });

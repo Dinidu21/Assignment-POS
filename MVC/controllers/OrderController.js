@@ -47,7 +47,7 @@ export default class OrderController {
         }
 
         const id = `#ORD-${new Date().getFullYear()}-${String(orders.length + 1).padStart(3, '0')}`;
-        const newOrder = { id, customer, date, items: orderItems.length, total, status: 'Pending' };
+        const newOrder = { id, customer, date, items: orderItems, total, status: 'Pending' };
         orders.push(newOrder);
 
         // Update stock
@@ -97,7 +97,7 @@ export default class OrderController {
 
         order.customer = customer;
         order.date = date;
-        order.items = orderItems.length;
+        order.items = orderItems;
         order.total = total;
         order.status = status;
         Swal.fire('Success', 'Order updated successfully!', 'success');
