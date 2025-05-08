@@ -38,6 +38,19 @@ $(document).ready(function() {
         $('#content').toggleClass('active');
     });
 
+    // Update dashboard counts
+    function updateDashboard() {
+        const customers = CustomerController.getAllCustomers();
+        const items = ItemController.getAllItems();
+        const orders = OrderController.getAllOrders();
+        const revenue = orders.reduce((sum, order) => sum + order.total, 0);
+
+        $('#totalCustomers').text(customers.length);
+        $('#totalItems').text(items.length);
+        $('#totalOrders').text(orders.length);
+        $('#totalRevenue').text('$' + revenue.toFixed(2));
+    }
+
     // Customer Management
     function renderCustomers() {
         const customers = CustomerController.getAllCustomers();
@@ -68,7 +81,6 @@ $(document).ready(function() {
         const name = $('#customerName').val();
         const email = $('#customerEmail').val();
         const phone = $('#customerPhone').val();
-
         if (id) {
             // Update customer
             if (CustomerController.updateCustomer(id, name, email, phone, '')) {
@@ -77,6 +89,7 @@ $(document).ready(function() {
                 $('#addCustomerModalLabel').text('Add New Customer');
                 $('#customerForm').removeData('edit-id');
                 renderCustomers();
+                updateDashboard();
             }
         } else {
             // Add customer
@@ -84,6 +97,7 @@ $(document).ready(function() {
                 $('#addCustomerModal').modal('hide');
                 $('#customerForm')[0].reset();
                 renderCustomers();
+                updateDashboard();
             }
         }
     });
@@ -113,6 +127,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 if (CustomerController.deleteCustomer(id)) {
                     renderCustomers();
+                    updateDashboard();
                 }
             }
         });
@@ -157,7 +172,6 @@ $(document).ready(function() {
         const category = $('#itemCategory').val();
         const price = $('#itemPrice').val();
         const stock = $('#itemStock').val();
-
         if (code) {
             // Update item
             if (ItemController.updateItem(code, name, category, price, stock, '')) {
@@ -166,6 +180,7 @@ $(document).ready(function() {
                 $('#addItemModalLabel').text('Add New Item');
                 $('#itemForm').removeData('edit-code');
                 renderItems();
+                updateDashboard();
             }
         } else {
             // Add item
@@ -173,6 +188,7 @@ $(document).ready(function() {
                 $('#addItemModal').modal('hide');
                 $('#itemForm')[0].reset();
                 renderItems();
+                updateDashboard();
             }
         }
     });
@@ -203,6 +219,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 if (ItemController.deleteItem(code)) {
                     renderItems();
+                    updateDashboard();
                 }
             }
         });
@@ -347,6 +364,7 @@ $(document).ready(function() {
                 $('#newOrderModalLabel').text('Create New Order');
                 $('#orderForm').removeData('edit-id');
                 renderOrders();
+                updateDashboard();
             }
         } else {
             // Add order
@@ -354,6 +372,7 @@ $(document).ready(function() {
                 $('#newOrderModal').modal('hide');
                 $('#orderForm')[0].reset();
                 renderOrders();
+                updateDashboard();
             }
         }
     });
@@ -382,6 +401,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 if (OrderController.deleteOrder(id)) {
                     renderOrders();
+                    updateDashboard();
                 }
             }
         });
@@ -395,6 +415,7 @@ $(document).ready(function() {
     });
 
     // Initial render
+    updateDashboard();
     renderCustomers();
     renderItems();
     renderOrders();
