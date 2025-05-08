@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartPOS | Point of Sale System</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SmartPOS - A comprehensive point of sale solution for retail, restaurants, and businesses of all sizes. Manage inventory, sales, and customers efficiently.">
     <meta name="author" content="Dinidu Sachintha">
     <meta name="keywords" content="POS, Point of Sale, Inventory Management, Sales Tracking, Receipt Printing, Dinidu Sachintha, SmartPOS, Retail Management, Customer Management">
@@ -34,90 +32,90 @@
             z-index: 100;
             transition: all 0.3s;
         }
-        
+
         .sidebar-header {
             padding: 20px;
             background-color: #0d6efd;
         }
-        
+
         .sidebar-menu {
             padding: 0;
             list-style: none;
         }
-        
+
         .sidebar-menu li {
             padding: 12px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+
         .sidebar-menu li:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
-        
+
         .sidebar-menu li.active {
             background-color: #0d6efd;
         }
-        
+
         .sidebar-menu li i {
             margin-right: 10px;
         }
-        
+
         .content {
             margin-left: 250px;
             padding: 20px;
             transition: all 0.3s;
         }
-        
+
         .card {
             margin-bottom: 20px;
         }
-        
+
         .card-header {
             font-weight: bold;
         }
-        
+
         .btn-action {
             margin-right: 5px;
         }
-        
+
         .table-container {
             overflow-x: auto;
         }
-        
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 0;
                 padding: 0;
             }
-            
+
             .content {
                 margin-left: 0;
             }
-            
+
             .sidebar.active {
                 width: 250px;
             }
-            
+
             .content.active {
                 margin-left: 250px;
             }
         }
-        
+
         .page-section {
             display: none;
         }
-        
+
         .page-section.active {
             display: block;
         }
-        
+
         .order-item {
             border-bottom: 1px solid #eee;
             padding: 10px 0;
         }
-        
+
         .toggle-sidebar {
             position: fixed;
             top: 10px;
@@ -125,1070 +123,1406 @@
             z-index: 101;
             display: none;
         }
-        
+
         @media (max-width: 768px) {
             .toggle-sidebar {
                 display: block;
             }
         }
-    </style>
 
+        .is-invalid {
+            border-color: #dc3545;
+        }
+
+        .invalid-feedback {
+            display: none;
+            color: #dc3545;
+            font-size: 0.875em;
+        }
+
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
-    <button class="btn btn-primary toggle-sidebar" id="toggle-sidebar">
-        <i class="fas fa-bars"></i>
-    </button>
-    
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="text-center py-3">
+<button class="btn btn-primary toggle-sidebar" id="toggle-sidebar">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="text-center py-3">
             <span class="fa-stack fa-2x">
                 <i class="fas fa-circle fa-stack-2x text-primary"></i>
                 <i class="fas fa-cash-register fa-stack-1x fa-inverse"></i>
             </span>
-            <h5 class="mt-2">SmartPOS</h5>
-        </div>
-
-        <ul class="sidebar-menu">
-            <li data-page="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
-            <li data-page="customer-management"><i class="fas fa-users"></i> Customer Management</li>
-            <li data-page="store-management"><i class="fas fa-store"></i> Store Management</li>
-            <li data-page="invoice-management"><i class="fas fa-file-invoice"></i> Invoice Management</li>
-            <li data-page="settings"><i class="fas fa-cog"></i> Settings</li>
-        </ul>
-    </div>
-    
-    <!-- Content -->
-    <div class="content" id="content">
-        <!-- Dashboard Page -->
-        <div class="page-section active" id="dashboard">
-            <div class="container-fluid">
-                <h1 class="mb-4">Dashboard</h1>
-                <div class="row">
-                    <div class="col-md-3 mb-4">
-                        <div class="card bg-primary text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Total Customers</h6>
-                                        <h2 class="mb-0">145</h2>
-                                    </div>
-                                    <i class="fas fa-users fa-3x"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card bg-success text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Total Items</h6>
-                                        <h2 class="mb-0">208</h2>
-                                    </div>
-                                    <i class="fas fa-box-open fa-3x"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card bg-warning text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Total Orders</h6>
-                                        <h2 class="mb-0">432</h2>
-                                    </div>
-                                    <i class="fas fa-shopping-cart fa-3x"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card bg-danger text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="card-title">Revenue</h6>
-                                        <h2 class="mb-0">$15,240</h2>
-                                    </div>
-                                    <i class="fas fa-dollar-sign fa-3x"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-8 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                Recent Orders
-                            </div>
-                            <div class="card-body">
-                                <div class="table-container">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Order ID</th>
-                                                <th>Customer</th>
-                                                <th>Date</th>
-                                                <th>Amount</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>#ORD-2023-001</td>
-                                                <td>John Smith</td>
-                                                <td>15/04/2025</td>
-                                                <td>$250.00</td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-002</td>
-                                                <td>Jane Doe</td>
-                                                <td>15/04/2025</td>
-                                                <td>$120.50</td>
-                                                <td><span class="badge bg-warning">Pending</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-003</td>
-                                                <td>Robert Johnson</td>
-                                                <td>14/04/2025</td>
-                                                <td>$350.75</td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-004</td>
-                                                <td>Emily Wilson</td>
-                                                <td>14/04/2025</td>
-                                                <td>$185.20</td>
-                                                <td><span class="badge bg-danger">Cancelled</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-005</td>
-                                                <td>Michael Brown</td>
-                                                <td>13/04/2025</td>
-                                                <td>$420.00</td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                Top Selling Items
-                            </div>
-                            <div class="card-body">
-                                <div class="order-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6>Laptop HP Elite</h6>
-                                        <small class="text-muted">Electronics</small>
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">142 sold</span>
-                                </div>
-                                <div class="order-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6>Wireless Mouse</h6>
-                                        <small class="text-muted">Accessories</small>
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">98 sold</span>
-                                </div>
-                                <div class="order-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6>USB-C Charger</h6>
-                                        <small class="text-muted">Accessories</small>
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">87 sold</span>
-                                </div>
-                                <div class="order-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6>External SSD 1TB</h6>
-                                        <small class="text-muted">Storage</small>
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">76 sold</span>
-                                </div>
-                                <div class="order-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6>Bluetooth Headphones</h6>
-                                        <small class="text-muted">Audio</small>
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">65 sold</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Customer Management Page -->
-        <div class="page-section" id="customer-management">
-            <div class="container-fluid">
-                <h1 class="mb-4">Customer Management</h1>
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Manage Customers</span>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
-                                    <i class="fas fa-plus"></i> Add New Customer
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search customers..." id="customerSearch">
-                                        <button class="btn btn-outline-secondary" type="button">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="table-container">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Address</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>C001</td>
-                                                <td>John Smith</td>
-                                                <td>john@example.com</td>
-                                                <td>+1 234-567-8901</td>
-                                                <td>123 Main St, City</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>C002</td>
-                                                <td>Jane Doe</td>
-                                                <td>jane@example.com</td>
-                                                <td>+1 234-567-8902</td>
-                                                <td>456 Oak St, Town</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>C003</td>
-                                                <td>Robert Johnson</td>
-                                                <td>robert@example.com</td>
-                                                <td>+1 234-567-8903</td>
-                                                <td>789 Pine St, Village</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>C004</td>
-                                                <td>Emily Wilson</td>
-                                                <td>emily@example.com</td>
-                                                <td>+1 234-567-8904</td>
-                                                <td>101 Elm St, County</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>C005</td>
-                                                <td>Michael Brown</td>
-                                                <td>michael@example.com</td>
-                                                <td>+1 234-567-8905</td>
-                                                <td>202 Cedar St, District</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-end">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Store Management Page -->
-        <div class="page-section" id="store-management">
-            <div class="container-fluid">
-                <h1 class="mb-4">Store Management</h1>
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Manage Items</span>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
-                                    <i class="fas fa-plus"></i> Add New Item
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search items..." id="itemSearch">
-                                        <button class="btn btn-outline-secondary" type="button">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="table-container">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Code</th>
-                                                <th>Name</th>
-                                                <th>Category</th>
-                                                <th>Price</th>
-                                                <th>Stock</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>P001</td>
-                                                <td>Laptop HP Elite</td>
-                                                <td>Electronics</td>
-                                                <td>$999.99</td>
-                                                <td>25</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>P002</td>
-                                                <td>Wireless Mouse</td>
-                                                <td>Accessories</td>
-                                                <td>$24.99</td>
-                                                <td>50</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>P003</td>
-                                                <td>USB-C Charger</td>
-                                                <td>Accessories</td>
-                                                <td>$19.99</td>
-                                                <td>35</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>P004</td>
-                                                <td>External SSD 1TB</td>
-                                                <td>Storage</td>
-                                                <td>$149.99</td>
-                                                <td>15</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>P005</td>
-                                                <td>Bluetooth Headphones</td>
-                                                <td>Audio</td>
-                                                <td>$79.99</td>
-                                                <td>20</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-end">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Invoice Management Page -->
-        <div class="page-section" id="invoice-management">
-            <div class="container-fluid">
-                <h1 class="mb-4">Invoice Management</h1>
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Manage Orders</span>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newOrderModal">
-                                    <i class="fas fa-plus"></i> Create New Order
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search orders..." id="orderSearch">
-                                        <button class="btn btn-outline-secondary" type="button">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="table-container">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Order ID</th>
-                                                <th>Customer</th>
-                                                <th>Date</th>
-                                                <th>Items</th>
-                                                <th>Total</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>#ORD-2023-001</td>
-                                                <td>John Smith</td>
-                                                <td>15/04/2025</td>
-                                                <td>3</td>
-                                                <td>$250.00</td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-info btn-action">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-002</td>
-                                                <td>Jane Doe</td>
-                                                <td>15/04/2025</td>
-                                                <td>2</td>
-                                                <td>$120.50</td>
-                                                <td><span class="badge bg-warning">Pending</span></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-info btn-action">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-003</td>
-                                                <td>Robert Johnson</td>
-                                                <td>14/04/2025</td>
-                                                <td>4</td>
-                                                <td>$350.75</td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-info btn-action">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-004</td>
-                                                <td>Emily Wilson</td>
-                                                <td>14/04/2025</td>
-                                                <td>1</td>
-                                                <td>$185.20</td>
-                                                <td><span class="badge bg-danger">Cancelled</span></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-info btn-action">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-2023-005</td>
-                                                <td>Michael Brown</td>
-                                                <td>13/04/2025</td>
-                                                <td>5</td>
-                                                <td>$420.00</td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-info btn-action">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-primary btn-action">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger btn-action">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Page -->
-        <div class="page-section" id="settings">
-            <div class="container-fluid">
-                <h1 class="mb-4">Settings</h1>
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                General Settings
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="companyName" class="form-label">Company Name</label>
-                                        <input type="text" class="form-control" id="companyName" value="Tech Store">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="companyEmail" class="form-label">Email Address</label>
-                                        <input type="email" class="form-control" id="companyEmail" value="info@techstore.com">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="companyPhone" class="form-label">Phone Number</label>
-                                        <input type="text" class="form-control" id="companyPhone" value="+1 234-567-8900">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="companyAddress" class="form-label">Address</label>
-                                        <textarea class="form-control" id="companyAddress" rows="3">123 Tech Street, Silicon Valley, CA 94043</textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                System Settings
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="currencySelect" class="form-label">Currency</label>
-                                        <select class="form-select" id="currencySelect">
-                                            <option value="USD" selected>USD ($)</option>
-                                            <option value="EUR">EUR (€)</option>
-                                            <option value="GBP">GBP (£)</option>
-                                            <option value="JPY">JPY (¥)</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="taxRate" class="form-label">Tax Rate (%)</label>
-                                        <input type="number" class="form-control" id="taxRate" value="7.5">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="dateFormat" class="form-label">Date Format</label>
-                                        <select class="form-select" id="dateFormat">
-                                            <option value="MM/DD/YYYY" selected>MM/DD/YYYY</option>
-                                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="enableNotifications" checked>
-                                        <label class="form-check-label" for="enableNotifications">Enable Email Notifications</label>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
+        <h5 class="mt-2">SmartPOS</h5>
     </div>
 
-    <!-- Modals -->
-    <!-- Add Customer Modal -->
-    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <ul class="sidebar-menu">
+        <li data-page="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
+        <li data-page="customer-management"><i class="fas fa-users"></i> Customer Management</li>
+        <li data-page="store-management"><i class="fas fa-store"></i> Store Management</li>
+        <li data-page="invoice-management"><i class="fas fa-file-invoice"></i> Invoice Management</li>
+        <li data-page="settings"><i class="fas fa-cog"></i> Settings</li>
+    </ul>
+</div>
+
+<!-- Content -->
+<div class="content" id="content">
+    <!-- Dashboard Page -->
+    <div class="page-section active" id="dashboard">
+        <div class="container-fluid">
+            <h1 class="mb-4">Dashboard</h1>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title">Total Customers</h6>
+                                    <h2 class="mb-0" id="totalCustomers">0</h2>
+                                </div>
+                                <i class="fas fa-users fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="customerName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="customerName" required>
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title">Total Items</h6>
+                                    <h2 class="mb-0" id="totalItems">0</h2>
+                                </div>
+                                <i class="fas fa-box-open fa-3x"></i>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="customerEmail" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="customerEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="customerPhone" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="customerPhone" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="customerAddress" class="form-label">Address</label>
-                            <textarea class="form-control" id="customerAddress" rows="3" required></textarea>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Add Customer</button>
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title">Total Orders</h6>
+                                    <h2 class="mb-0" id="totalOrders">0</h2>
+                                </div>
+                                <i class="fas fa-shopping-cart fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title">Revenue</h6>
+                                    <h2 class="mb-0" id="totalRevenue">$0.00</h2>
+                                </div>
+                                <i class="fas fa-dollar-sign fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Add Item Modal -->
-    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="itemName" class="form-label">Item Name</label>
-                            <input type="text" class="form-control" id="itemName" required>
+            <div class="row">
+                <div class="col-md-8 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Recent Orders
                         </div>
-                        <div class="mb-3">
-                            <label for="itemCategory" class="form-label">Category</label>
-                            <select class="form-select" id="itemCategory" required>
-                                <option value="" selected disabled>Select a category</option>
-                                <option value="Electronics">Electronics</option>
-                                <option value="Accessories">Accessories</option>
-                                <option value="Storage">Storage</option>
-                                <option value="Audio">Audio</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="itemPrice" class="form-label">Price</label>
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input type="number" class="form-control" id="itemPrice" step="0.01" min="0" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="itemStock" class="form-label">Stock Quantity</label>
-                            <input type="number" class="form-control" id="itemStock" min="0" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="itemDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="itemDescription" rows="3"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Add Item</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- New Order Modal -->
-    <div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newOrderModalLabel">Create New Order</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="orderCustomer" class="form-label">Customer</label>
-                                <select class="form-select" id="orderCustomer" required>
-                                    <option value="" selected disabled>Select customer</option>
-                                    <option value="1">John Smith</option>
-                                    <option value="2">Jane Doe</option>
-                                    <option value="3">Robert Johnson</option>
-                                    <option value="4">Emily Wilson</option>
-                                    <option value="5">Michael Brown</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="orderDate" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="orderDate" value="2025-04-15" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Items</label>
+                        <div class="card-body">
                             <div class="table-container">
-                                <table class="table table-bordered" id="orderItemsTable">
+                                <table class="table table-striped" id="recentOrdersTable">
                                     <thead>
                                     <tr>
-                                        <th>Item</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Action</th>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <select class="form-select">
-                                                <option value="" selected disabled>Select item</option>
-                                                <option value="1">Laptop HP Elite</option>
-                                                <option value="2">Wireless Mouse</option>
-                                                <option value="3">USB-C Charger</option>
-                                                <option value="4">External SSD 1TB</option>
-                                                <option value="5">Bluetooth Headphones</option>
-                                            </select>
-                                        </td>
-                                        <td>$0.00</td>
-                                        <td>
-                                            <input type="number" class="form-control" value="1" min="1">
-                                        </td>
-                                        <td>$0.00</td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
-                            <button type="button" class="btn btn-sm btn-success" id="addOrderItem">
-                                <i class="fas fa-plus"></i> Add Item
-                            </button>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-6">
-                                <div class="card">
-                                    <div class="card-body p-2">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span>Subtotal:</span>
-                                            <span>$0.00</span>
-                                        </div>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span>Tax (7.5%):</span>
-                                            <span>$0.00</span>
-                                        </div>
-                                        <div class="d-flex justify-content-between fw-bold">
-                                            <span>Total:</span>
-                                            <span>$0.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="orderNotes" class="form-label">Notes</label>
-                            <textarea class="form-control" id="orderNotes" rows="2"></textarea>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Create Order</button>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Top Selling Items
+                        </div>
+                        <div class="card-body" id="topSellingItems"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Customer Management Page -->
+    <div class="page-section" id="customer-management">
+        <div class="container-fluid">
+            <h1 class="mb-4">Customer Management</h1>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Manage Customers</span>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+                                <i class="fas fa-plus"></i> Add New Customer
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search customers..." id="customerSearch">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table class="table table-striped" id="customerTable">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-end" id="customerPagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Custom JS -->
-    <script>
-        $(document).ready(function() {
-            // Load last active page from localStorage if exists
-            const lastActivePage = localStorage.getItem('activePageId');
-            if (lastActivePage) {
-                $('.page-section').removeClass('active');
-                $(`#${lastActivePage}`).addClass('active');
-                $('.sidebar-menu li').removeClass('active');
-                $(`.sidebar-menu li[data-page="${lastActivePage}"]`).addClass('active');
-            }
+    <!-- Store Management Page -->
+    <div class="page-section" id="store-management">
+        <div class="container-fluid">
+            <h1 class="mb-4">Store Management</h1>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Manage Items</span>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                                <i class="fas fa-plus"></i> Add New Item
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search items..." id="itemSearch">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table class="table table-striped" id="itemTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-end" id="itemPagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            // Handle sidebar menu clicks
-            $('.sidebar-menu li').click(function() {
-                const pageId = $(this).data('page');
+    <!-- Invoice Management Page -->
+    <div class="page-section" id="invoice-management">
+        <div class="container-fluid">
+            <h1 class="mb-4">Invoice Management</h1>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Manage Orders</span>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newOrderModal">
+                                <i class="fas fa-plus"></i> Create New Order
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search orders..." id="orderSearch">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table class="table table-striped" id="orderTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Date</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-end" id="orderPagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                // Update sidebar active state
-                $('.sidebar-menu li').removeClass('active');
-                $(this).addClass('active');
+    <!-- Settings Page -->
+    <div class="page-section" id="settings">
+        <div class="container-fluid">
+            <h1 class="mb-4">Settings</h1>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            General Settings
+                        </div>
+                        <div class="card-body">
+                            <form id="generalSettingsForm">
+                                <div class="mb-3">
+                                    <label for="companyName" class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" id="companyName" value="Tech Store" required>
+                                    <div class="invalid-feedback">Company name is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="companyEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="companyEmail" value="info@techstore.com" required>
+                                    <div class="invalid-feedback">Valid email is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="companyPhone" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="companyPhone" value="+1 234-567-8900" required pattern="\+?[1-9]\d{1,14}">
+                                    <div class="invalid-feedback">Valid phone number is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="companyAddress" class="form-label">Address</label>
+                                    <textarea class="form-control" id="companyAddress" rows="3" required>123 Tech Street, Silicon Valley, CA 94043</textarea>
+                                    <div class="invalid-feedback">Address is required.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            System Settings
+                        </div>
+                        <div class="card-body">
+                            <form id="systemSettingsForm">
+                                <div class="mb-3">
+                                    <label for="currencySelect" class="form-label">Currency</label>
+                                    <select class="form-select" id="currencySelect" required>
+                                        <option value="USD" selected>USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="GBP">GBP (£)</option>
+                                        <option value="JPY">JPY (¥)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taxRate" class="form-label">Tax Rate (%)</label>
+                                    <input type="number" class="form-control" id="taxRate" value="7.5" min="0" max="100" step="0.1" required>
+                                    <div class="invalid-feedback">Tax rate must be between 0 and 100.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="dateFormat" class="form-label">Date Format</label>
+                                    <select class="form-select" id="dateFormat" required>
+                                        <option value="MM/DD/YYYY" selected>MM/DD/YYYY</option>
+                                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="enableNotifications" checked>
+                                    <label class="form-check-label" for="enableNotifications">Enable Email Notifications</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                // Show corresponding page
-                $('.page-section').removeClass('active');
-                $('#' + pageId).addClass('active');
+<!-- Modals -->
+<!-- Add/Edit Customer Modal -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customerForm">
+                    <input type="hidden" id="customerId">
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="customerName" required>
+                        <div class="invalid-feedback">Full name is required.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerEmail" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="customerEmail" required>
+                        <div class="invalid-feedback">Valid email is required.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerPhone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="customerPhone" required pattern="\+?[1-9]\d{1,14}">
+                        <div class="invalid-feedback">Valid phone number is required.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerAddress" class="form-label">Address</label>
+                        <textarea class="form-control" id="customerAddress" rows="3" required></textarea>
+                        <div class="invalid-feedback">Address is required.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveCustomer">Add Customer</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                // Save active page to localStorage
-                localStorage.setItem('activePageId', pageId);
+<!-- Add/Edit Item Modal -->
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <input type="hidden" id="itemId">
+                    <div class="mb-3">
+                        <label for="itemCode" class="form-label">Item Code</label>
+                        <input type="text" class="form-control" id="itemCode" required pattern="[A-Z0-9]{4,10}">
+                        <div class="invalid-feedback">Item code must be 4-10 alphanumeric characters.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemName" class="form-label">Item Name</label>
+                        <input type="text" class="form-control" id="itemName" required>
+                        <div class="invalid-feedback">Item name is required.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemCategory" class="form-label">Category</label>
+                        <select class="form-select" id="itemCategory" required>
+                            <option value="" selected disabled>Select a category</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Storage">Storage</option>
+                            <option value="Audio">Audio</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="invalid-feedback">Category is required.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemPrice" class="form-label">Price</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="itemPrice" step="0.01" min="0" required>
+                            <div class="invalid-feedback">Price must be a positive number.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemStock" class="form-label">Stock Quantity</label>
+                        <input type="number" class="form-control" id="itemStock" min="0" required>
+                        <div class="invalid-feedback">Stock quantity must be a non-negative number.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="itemDescription" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveItem">Add Item</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                // Close sidebar on mobile after selection
-                if ($(window).width() < 768) {
-                    $('#sidebar').removeClass('active');
-                    $('#content').removeClass('active');
+<!-- New/Edit Order Modal -->
+<div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newOrderModalLabel">Create New Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm">
+                    <input type="hidden" id="orderId">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="orderCustomer" class="form-label">Customer</label>
+                            <select class="form-select" id="orderCustomer" required>
+                                <option value="" selected disabled>Select customer</option>
+                            </select>
+                            <div class="invalid-feedback">Customer is required.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="orderDate" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="orderDate" required>
+                            <div class="invalid-feedback">Date is required.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Items</label>
+                        <div class="table-container">
+                            <table class="table table-bordered" id="orderItemsTable">
+                                <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-success" id="addOrderItem">
+                            <i class="fas fa-plus"></i> Add Item
+                        </button>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 offset-md-6">
+                            <div class="card">
+                                <div class="card-body p-2">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Subtotal:</span>
+                                        <span id="orderSubtotal">$0.00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Tax (7.5%):</span>
+                                        <span id="orderTax">$0.00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between fw-bold">
+                                        <span>Total:</span>
+                                        <span id="orderTotal">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="orderNotes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="orderNotes" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="orderStatus" class="form-label">Status</label>
+                        <select class="form-select" id="orderStatus" required>
+                            <option value="Pending" selected>Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveOrder">Create Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Order Modal -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewOrderModalLabel">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <strong>Order ID:</strong> <span id="viewOrderId"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Customer:</strong> <span id="viewOrderCustomer"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Date:</strong> <span id="viewOrderDate"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Status:</strong> <span id="viewOrderStatus"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Items:</strong>
+                    <div class="table-container">
+                        <table class="table table-bordered" id="viewOrderItemsTable">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong>Subtotal:</strong> <span id="viewOrderSubtotal"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Tax:</strong> <span id="viewOrderTax"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Total:</strong> <span id="viewOrderTotal"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Notes:</strong> <span id="viewOrderNotes"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    $(document).ready(function() {
+        // In-memory data store
+        let customers = [
+            { id: 'C001', name: 'John Smith', email: 'john.smith@example.com', phone: '+12345678901', address: '123 Main St, City' },
+            { id: 'C002', name: 'Jane Doe', email: 'jane.doe@example.com', phone: '+12345678902', address: '456 Oak St, Town' },
+            { id: 'C003', name: 'Robert Johnson', email: 'robert.j@example.com', phone: '+12345678903', address: '789 Pine St, Village' }
+        ];
+
+        let items = [
+            { id: 'P001', code: 'P001', name: 'Laptop HP Elite', category: 'Electronics', price: 999.99, stock: 25, description: 'High-performance laptop', sold: 142 },
+            { id: 'P002', code: 'P002', name: 'Wireless Mouse', category: 'Accessories', price: 24.99, stock: 50, description: 'Ergonomic mouse', sold: 98 },
+            { id: 'P003', code: 'P003', name: 'USB-C Charger', category: 'Accessories', price: 19.99, stock: 35, description: 'Fast charger', sold: 87 },
+            { id: 'P004', code: 'P004', name: 'External SSD 1TB', category: 'Storage', price: 149.99, stock: 15, description: 'Portable SSD', sold: 76 },
+            { id: 'P005', code: 'P005', name: 'Bluetooth Headphones', category: 'Audio', price: 79.99, stock: 20, description: 'Wireless audio', sold: 65 }
+        ];
+
+        let orders = [
+            { id: 'ORD-2025-001', customerId: 'C001', date: '2025-04-15', items: [{ itemId: 'P001', quantity: 1 }, { itemId: 'P002', quantity: 2 }], total: 1049.97, status: 'Completed', notes: '' },
+            { id: 'ORD-2025-002', customerId: 'C002', date: '2025-04-15', items: [{ itemId: 'P003', quantity: 1 }], total: 19.99, status: 'Pending', notes: 'Urgent delivery' },
+            { id: 'ORD-2025-003', customerId: 'C003', date: '2025-04-14', items: [{ itemId: 'P004', quantity: 1 }, { itemId: 'P005', quantity: 1 }], total: 229.98, status: 'Completed', notes: '' }
+        ];
+
+        let settings = {
+            companyName: 'Tech Store',
+            companyEmail: 'info@techstore.com',
+            companyPhone: '+12345678900',
+            companyAddress: '123 Tech Street, Silicon Valley, CA 94043',
+            currency: 'USD',
+            taxRate: 7.5,
+            dateFormat: 'MM/DD/YYYY',
+            enableNotifications: true
+        };
+
+        // Utility functions
+        function generateId(prefix) {
+            return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        }
+
+        function formatDate(date, format) {
+            const d = new Date(date);
+            const pad = (n) => n.toString().padStart(2, '0');
+            const map = {
+                'MM': pad(d.getMonth() + 1),
+                'DD': pad(d.getDate()),
+                'YYYY': d.getFullYear()
+            };
+            return format.replace(/MM|DD|YYYY/g, matched => map[matched]);
+        }
+
+        function validateForm(formId) {
+            const form = document.getElementById(formId);
+            return form.checkValidity();
+        }
+
+        function showValidationErrors(formId) {
+            const form = document.getElementById(formId);
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
                 }
             });
+        }
 
-            // Toggle sidebar on mobile
-            $('#toggle-sidebar').click(function() {
-                $('#sidebar').toggleClass('active');
-                $('#content').toggleClass('active');
+        // Dashboard rendering
+        function updateDashboard() {
+            const totalCustomers = customers.length;
+            const totalItems = items.length;
+            const totalOrders = orders.length;
+            const totalRevenue = orders
+                .filter(order => order.status === 'Completed')
+                .reduce((sum, order) => sum + order.total, 0);
+
+            $('#totalCustomers').text(totalCustomers);
+            $('#totalItems').text(totalItems);
+            $('#totalOrders').text(totalOrders);
+            $('#totalRevenue').text(`$${totalRevenue.toFixed(2)}`);
+
+            // Recent Orders
+            const recentOrders = orders.slice(0, 5);
+            let ordersHtml = '';
+            recentOrders.forEach(order => {
+                const customer = customers.find(c => c.id === order.customerId);
+                ordersHtml += `
+                        <tr>
+                            <td>${order.id}</td>
+                            <td>${customer ? customer.name : 'Unknown'}</td>
+                            <td>${formatDate(order.date, settings.dateFormat)}</td>
+                            <td>$${order.total.toFixed(2)}</td>
+                            <td><span class="badge bg-${order.status === 'Completed' ? 'success' : order.status === 'Pending' ? 'warning' : 'danger'}">${order.status}</span></td>
+                        </tr>
+                    `;
             });
+            $('#recentOrdersTable tbody').html(ordersHtml);
 
-            // Customer search functionality
-            $('#customerSearch').on('keyup', function() {
-                const value = $(this).val().toLowerCase();
-                $('#customer-management table tbody tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
+            // Top Selling Items
+            const topItems = items.sort((a, b) => b.sold - a.sold).slice(0, 5);
+            let topItemsHtml = '';
+            topItems.forEach(item => {
+                topItemsHtml += `
+                        <div class="order-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6>${item.name}</h6>
+                                <small class="text-muted">${item.category}</small>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">${item.sold} sold</span>
+                        </div>
+                    `;
             });
+            $('#topSellingItems').html(topItemsHtml);
+        }
 
-            // Item search functionality
-            $('#itemSearch').on('keyup', function() {
-                const value = $(this).val().toLowerCase();
-                $('#store-management table tbody tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
+        // Customer management
+        function renderCustomers(page = 1, pageSize = 5) {
+            const start = (page - 1) * pageSize;
+            const end = start + pageSize;
+            const filteredCustomers = customers.filter(c => {
+                const search = $('#customerSearch').val().toLowerCase();
+                return !search || c.name.toLowerCase().includes(search) || c.email.toLowerCase().includes(search);
             });
+            const paginatedCustomers = filteredCustomers.slice(start, end);
 
-            // Order search functionality
-            $('#orderSearch').on('keyup', function() {
-                const value = $(this).val().toLowerCase();
-                $('#invoice-management table tbody tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
+            let html = '';
+            paginatedCustomers.forEach(customer => {
+                html += `
+                        <tr>
+                            <td>${customer.id}</td>
+                            <td>${customer.name}</td>
+                            <td>${customer.email}</td>
+                            <td>${customer.phone}</td>
+                            <td>${customer.address}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary btn-action edit-customer" data-id="${customer.id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-action delete-customer" data-id="${customer.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
             });
+            $('#customerTable tbody').html(html);
 
-            // Add new order item row
-            $('#addOrderItem').click(function() {
-                const newRow = `
+            // Pagination
+            const totalPages = Math.ceil(filteredCustomers.length / pageSize);
+            let paginationHtml = `
+                    <li class="page-item ${page === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${page - 1}">Previous</a>
+                    </li>
+                `;
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHtml += `
+                        <li class="page-item ${i === page ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `;
+            }
+            paginationHtml += `
+                    <li class="page-item ${page === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${page + 1}">Next</a>
+                    </li>
+                `;
+            $('#customerPagination').html(paginationHtml);
+        }
+
+        function resetCustomerForm() {
+            $('#customerForm')[0].reset();
+            $('#customerId').val('');
+            $('#addCustomerModalLabel').text('Add New Customer');
+            $('#saveCustomer').text('Add Customer');
+            $('#customerForm').find('.is-invalid').removeClass('is-invalid');
+        }
+
+        $('#addCustomerModal').on('show.bs.modal', resetCustomerForm);
+
+        $('#saveCustomer').click(function() {
+            if (!validateForm('customerForm')) {
+                showValidationErrors('customerForm');
+                return;
+            }
+
+            const customer = {
+                id: $('#customerId').val() || generateId('C'),
+                name: $('#customerName').val().trim(),
+                email: $('#customerEmail').val().trim(),
+                phone: $('#customerPhone').val().trim(),
+                address: $('#customerAddress').val().trim()
+            };
+
+            if (customer.id.startsWith('C')) {
+                const index = customers.findIndex(c => c.id === customer.id);
+                if (index !== -1) {
+                    customers[index] = customer;
+                    Swal.fire('Success', 'Customer updated successfully', 'success');
+                } else {
+                    customers.push(customer);
+                    Swal.fire('Success', 'Customer added successfully', 'success');
+                }
+            }
+
+            $('#addCustomerModal').modal('hide');
+            renderCustomers();
+            updateDashboard();
+        });
+
+        $(document).on('click', '.edit-customer', function() {
+            const id = $(this).data('id');
+            const customer = customers.find(c => c.id === id);
+            if (customer) {
+                $('#customerId').val(customer.id);
+                $('#customerName').val(customer.name);
+                $('#customerEmail').val(customer.email);
+                $('#customerPhone').val(customer.phone);
+                $('#customerAddress').val(customer.address);
+                $('#addCustomerModalLabel').text('Edit Customer');
+                $('#saveCustomer').text('Update Customer');
+                $('#addCustomerModal').modal('show');
+            }
+        });
+
+        $(document).on('click', '.delete-customer', function() {
+            const id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    customers = customers.filter(c => c.id !== id);
+                    renderCustomers();
+                    updateDashboard();
+                    Swal.fire('Deleted!', 'Customer has been deleted.', 'success');
+                }
+            });
+        });
+
+        $('#customerSearch').on('keyup', () => renderCustomers());
+
+        // Item management
+        function renderItems(page = 1, pageSize = 5) {
+            const start = (page - 1) * pageSize;
+            const end = start + pageSize;
+            const filteredItems = items.filter(i => {
+                const search = $('#itemSearch').val().toLowerCase();
+                return !search || i.name.toLowerCase().includes(search) || i.code.toLowerCase().includes(search);
+            });
+            const paginatedItems = filteredItems.slice(start, end);
+
+            let html = '';
+            paginatedItems.forEach(item => {
+                html += `
+                        <tr>
+                            <td>${item.code}</td>
+                            <td>${item.name}</td>
+                            <td>${item.category}</td>
+                            <td>$${item.price.toFixed(2)}</td>
+                            <td>${item.stock}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary btn-action edit-item" data-id="${item.id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-action delete-item" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+            });
+            $('#itemTable tbody').html(html);
+
+            // Pagination
+            const totalPages = Math.ceil(filteredItems.length / pageSize);
+            let paginationHtml = `
+                    <li class="page-item ${page === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${page - 1}">Previous</a>
+                    </li>
+                `;
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHtml += `
+                        <li class="page-item ${i === page ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `;
+            }
+            paginationHtml += `
+                    <li class="page-item ${page === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${page + 1}">Next</a>
+                    </li>
+                `;
+            $('#itemPagination').html(paginationHtml);
+        }
+
+        function resetItemForm() {
+            $('#itemForm')[0].reset();
+            $('#itemId').val('');
+            $('#addItemModalLabel').text('Add New Item');
+            $('#saveItem').text('Add Item');
+            $('#itemForm').find('.is-invalid').removeClass('is-invalid');
+        }
+
+        $('#addItemModal').on('show.bs.modal', resetItemForm);
+
+        $('#saveItem').click(function() {
+            if (!validateForm('itemForm')) {
+                showValidationErrors('itemForm');
+                return;
+            }
+
+            const item = {
+                id: $('#itemId').val() || generateId('P'),
+                code: $('#itemCode').val().trim().toUpperCase(),
+                name: $('#itemName').val().trim(),
+                category: $('#itemCategory').val(),
+                price: parseFloat($('#itemPrice').val()),
+                stock: parseInt($('#itemStock').val()),
+                description: $('#itemDescription').val().trim(),
+                sold: $('#itemId').val() ? items.find(i => i.id === $('#itemId').val()).sold : 0
+            };
+
+            if (items.some(i => i.code === item.code && i.id !== item.id)) {
+                Swal.fire('Error', 'Item code already exists.', 'error');
+                return;
+            }
+
+            if (item.id.startsWith('P')) {
+                const index = items.findIndex(i => i.id === item.id);
+                if (index !== -1) {
+                    items[index] = item;
+                    Swal.fire('Success', 'Item updated successfully', 'success');
+                } else {
+                    items.push(item);
+                    Swal.fire('Success', 'Item added successfully', 'success');
+                }
+            }
+
+            $('#addItemModal').modal('hide');
+            renderItems();
+            updateDashboard();
+        });
+
+        $(document).on('click', '.edit-item', function() {
+            const id = $(this).data('id');
+            const item = items.find(i => i.id === id);
+            if (item) {
+                $('#itemId').val(item.id);
+                $('#itemCode').val(item.code);
+                $('#itemName').val(item.name);
+                $('#itemCategory').val(item.category);
+                $('#itemPrice').val(item.price);
+                $('#itemStock').val(item.stock);
+                $('#itemDescription').val(item.description);
+                $('#addItemModalLabel').text('Edit Item');
+                $('#saveItem').text('Update Item');
+                $('#addItemModal').modal('show');
+            }
+        });
+
+        $(document).on('click', '.delete-item', function() {
+            const id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    items = items.filter(i => i.id !== id);
+                    renderItems();
+                    updateDashboard();
+                    Swal.fire('Deleted!', 'Item has been deleted.', 'success');
+                }
+            });
+        });
+
+        $('#itemSearch').on('keyup', () => renderItems());
+
+        // Order management
+        function renderOrders(page = 1, pageSize = 5) {
+            const start = (page - 1) * pageSize;
+            const end = start + pageSize;
+            const filteredOrders = orders.filter(o => {
+                const search = $('#orderSearch').val().toLowerCase();
+                const customer = customers.find(c => c.id === o.customerId);
+                return !search || o.id.toLowerCase().includes(search) || (customer && customer.name.toLowerCase().includes(search));
+            });
+            const paginatedOrders = filteredOrders.slice(start, end);
+
+            let html = '';
+            paginatedOrders.forEach(order => {
+                const customer = customers.find(c => c.id === order.customerId);
+                html += `
+                        <tr>
+                            <td>${order.id}</td>
+                            <td>${customer ? customer.name : 'Unknown'}</td>
+                            <td>${formatDate(order.date, settings.dateFormat)}</td>
+                            <td>${order.items.length}</td>
+                            <td>$${order.total.toFixed(2)}</td>
+                            <td><span class="badge bg-${order.status === 'Completed' ? 'success' : order.status === 'Pending' ? 'warning' : 'danger'}">${order.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info btn-action view-order" data-id="${order.id}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-primary btn-action edit-order" data-id="${order.id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-action delete-order" data-id="${order.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+            });
+            $('#orderTable tbody').html(html);
+
+            // Pagination
+            const totalPages = Math.ceil(filteredOrders.length / pageSize);
+            let paginationHtml = `
+                    <li class="page-item ${page === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${page - 1}">Previous</a>
+                    </li>
+                `;
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHtml += `
+                        <li class="page-item ${i === page ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `;
+            }
+            paginationHtml += `
+                    <li class="page-item ${page === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${page + 1}">Next</a>
+                    </li>
+                `;
+            $('#orderPagination').html(paginationHtml);
+        }
+
+        function resetOrderForm() {
+            $('#orderForm')[0].reset();
+            $('#orderId').val('');
+            $('#orderCustomer').html('<option value="" selected disabled>Select customer</option>');
+            customers.forEach(c => {
+                $('#orderCustomer').append(`<option value="${c.id}">${c.name}</option>`);
+            });
+            $('#orderDate').val(new Date().toISOString().split('T')[0]);
+            $('#orderItemsTable tbody').html('');
+            addOrderItemRow();
+            $('#orderNotes').val('');
+            $('#orderStatus').val('Pending');
+            $('#newOrderModalLabel').text('Create New Order');
+            $('#saveOrder').text('Create Order');
+            $('#orderForm').find('.is-invalid').removeClass('is-invalid');
+            calculateOrderTotal();
+        }
+
+        function addOrderItemRow(itemId = '', quantity = 1, price = 0) {
+            const options = items.map(i => `<option value="${i.id}" ${i.id === itemId ? 'selected' : ''}>${i.name}</option>`).join('');
+            const row = `
                     <tr>
                         <td>
-                            <select class="form-select">
-                                <option value="" selected disabled>Select item</option>
-                                <option value="1">Laptop HP Elite</option>
-                                <option value="2">Wireless Mouse</option>
-                                <option value="3">USB-C Charger</option>
-                                <option value="4">External SSD 1TB</option>
-                                <option value="5">Bluetooth Headphones</option>
+                            <select class="form-select order-item-select" required>
+                                <option value="" ${!itemId ? 'selected' : ''} disabled>Select item</option>
+                                ${options}
                             </select>
+                            <div class="invalid-feedback">Item is required.</div>
                         </td>
-                        <td>$0.00</td>
+                        <td class="item-price">$${price.toFixed(2)}</td>
                         <td>
-                            <input type="number" class="form-control" value="1" min="1">
+                            <input type="number" class="form-control item-quantity" value="${quantity}" min="1" required>
+                            <div class="invalid-feedback">Quantity must be at least 1.</div>
                         </td>
-                        <td>$0.00</td>
+                        <td class="item-total">$${(price * quantity).toFixed(2)}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-danger">
+                            <button type="button" class="btn btn-sm btn-danger remove-item">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
                     </tr>
                 `;
-                $('#orderItemsTable tbody').append(newRow);
+            $('#orderItemsTable tbody').append(row);
+        }
+
+        function calculateOrderTotal() {
+            let subtotal = 0;
+            $('#orderItemsTable tbody tr').each(function() {
+                const price = parseFloat($(this).find('.item-price').text().replace('$', '')) || 0;
+                const quantity = parseInt($(this).find('.item-quantity').val()) || 0;
+                const total = price * quantity;
+                $(this).find('.item-total').text(`$${total.toFixed(2)}`);
+                subtotal += total;
             });
 
-            // Handle remove order item
-            $(document).on('click', '#orderItemsTable .btn-danger', function() {
-                // Keep at least one row
-                if ($('#orderItemsTable tbody tr').length > 1) {
-                    $(this).closest('tr').remove();
-                }
-            });
+            const tax = subtotal * (settings.taxRate / 100);
+            const total = subtotal + tax;
 
-            // Demo price update functionality when item is selected
-            $(document).on('change', '#orderItemsTable select', function() {
-                const itemId = $(this).val();
-                const row = $(this).closest('tr');
-                let price = 0;
+            $('#orderSubtotal').text(`$${subtotal.toFixed(2)}`);
+            $('#orderTax').text(`$${tax.toFixed(2)}`);
+            $('#orderTotal').text(`$${total.toFixed(2)}`);
 
-                // Demo prices based on selection
-                switch(itemId) {
-                    case '1': price = 999.99; break; // Laptop
-                    case '2': price = 24.99; break;  // Mouse
-                    case '3': price = 19.99; break;  // Charger
-                    case '4': price = 149.99; break; // SSD
-                    case '5': price = 79.99; break;  // Headphones
-                    default: price = 0;
-                }
+            return { subtotal, tax, total };
+        }
 
-                // Update price cell
-                row.find('td:eq(1)').text('$' + price.toFixed(2));
+        $('#newOrderModal').on('show.bs.modal', resetOrderForm);
 
-                // Update total based on quantity
-                const quantity = parseInt(row.find('input[type="number"]').val());
-                row.find('td:eq(3)').text('$' + (price * quantity).toFixed(2));
+        $('#addOrderItem').click(function() {
+            addOrderItemRow();
+        });
 
-                // Recalculate order summary
+        $(document).on('change', '.order-item-select', function() {
+            const row = $(this).closest('tr');
+            const itemId = $(this).val();
+            const item = items.find(i => i.id === itemId);
+            const price = item ? item.price : 0;
+            row.find('.item-price').text(`$${price.toFixed(2)}`);
+            calculateOrderTotal();
+        });
+
+        $(document).on('change', '.item-quantity', function() {
+            calculateOrderTotal();
+        });
+
+        $(document).on('click', '.remove-item', function() {
+            if ($('#orderItemsTable tbody tr').length > 1) {
+                $(this).closest('tr').remove();
                 calculateOrderTotal();
-            });
-
-            // Update totals when quantity changes
-            $(document).on('change', '#orderItemsTable input[type="number"]', function() {
-                const row = $(this).closest('tr');
-                const priceText = row.find('td:eq(1)').text();
-                const price = parseFloat(priceText.replace('$', ''));
-                const quantity = parseInt($(this).val());
-
-                // Update row total
-                row.find('td:eq(3)').text('$' + (price * quantity).toFixed(2));
-
-                // Recalculate order summary
-                calculateOrderTotal();
-            });
-
-            // Function to calculate order summary
-            function calculateOrderTotal() {
-                let subtotal = 0;
-
-                // Sum up all row totals
-                $('#orderItemsTable tbody tr').each(function() {
-                    const totalText = $(this).find('td:eq(3)').text();
-                    if (totalText) {
-                        subtotal += parseFloat(totalText.replace('$', ''));
-                    }
-                });
-
-                const taxRate = 0.075; // 7.5%
-                const tax = subtotal * taxRate;
-                const total = subtotal + tax;
-
-                // Update order summary
-                $('.card-body .d-flex:nth-child(1) span:last-child').text('$' + subtotal.toFixed(2));
-                $('.card-body .d-flex:nth-child(2) span:last-child').text('$' + tax.toFixed(2));
-                $('.card-body .d-flex:nth-child(3) span:last-child').text('$' + total.toFixed(2));
             }
         });
-    </script>
+
+        $('#saveOrder').click(function() {
+            if (!validateForm('orderForm')) {
+                showValidationErrors('orderForm');
+                return;
+            }
+
+            const orderItems = [];
+            let isValid = true;
+            $('#orderItemsTable tbody tr').each(function() {
+                const itemId = $(this).find('.order-item-select').val();
+                const quantity = parseInt($(this).find('.item-quantity').val());
+                if (!itemId) {
+                    $(this).find('.order-item-select').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    orderItems.push({ itemId, quantity });
+                }
+            });
+
+            if (!isValid) {
+                Swal.fire('Error', 'Please select an item for each row.', 'error');
+                return;
+            }
+
+            const { total } = calculateOrderTotal();
+            const order = {
+                id: $('#orderId').val() || generateId('ORD'),
+                customerId: $('#orderCustomer').val(),
+                date: $('#orderDate').val(),
+                items: orderItems,
+                total: total,
+                status: $('#orderStatus').val(),
+                notes: $('#orderNotes').val().trim()
+            };
+
+            // Update stock and sold counts
+            order.items.forEach(oi => {
+                const item = items.find(i => i.id === oi.itemId);
+                if (item) {
+                    if ($('#orderId').val()) {
+                        // If editing, restore previous quantities
+                        const oldOrder = orders.find(o => o.id === $('#orderId').val());
+                        if (oldOrder) {
+                            const oldItem = oldOrder.items.find(i => i.itemId === oi.itemId);
+                            if (oldItem) {
+                                item.stock += oldItem.quantity;
+                                item.sold -= oldItem.quantity;
+                            }
+                        }
+                    }
+                    if (item.stock < oi.quantity) {
+                        isValid = false;
+                        Swal.fire('Error', `Insufficient stock for ${item.name}. Available: ${item.stock}`, 'error');
+                    } else {
+                        item.stock -= oi.quantity;
+                        item.sold += oi.quantity;
+                    }
+                }
+            });
+
+            if (!isValid) return;
+
+            if (order.id.startsWith('ORD')) {
+                const index = orders.findIndex(o => o.id === order.id);
+                if (index !== -1) {
+                    orders[index] = order;
+                    Swal.fire('Success', 'Order updated successfully', 'success');
+                } else {
+                    orders.push(order);
+                    Swal.fire('Success', 'Order created successfully', 'success');
+                }
+            }
+
+            $('#newOrderModal').modal('hide');
+            renderOrders();
+            renderItems();
+            updateDashboard();
+        });
+
+        $(document).on('click', '.view-order', function() {
+            const id = $(this).data('id');
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                const customer = customers.find(c => c.id === order.customerId);
+                $('#viewOrderId').text(order.id);
+                $('#viewOrderCustomer').text(customer ? customer.name : 'Unknown');
+                $('#viewOrderDate').text(formatDate(order.date, settings.dateFormat));
+                $('#viewOrderStatus').html(`<span class="badge bg-${order.status === 'Completed' ? 'success' : order.status === 'Pending' ? 'warning' : 'danger'}">${order.status}</span>`);
+
+                let itemsHtml = '';
+                order.items.forEach(oi => {
+                    const item = items.find(i => i.id === oi.itemId);
+                    if (item) {
+                        itemsHtml += `
+                                <tr>
+                                    <td>${item.name}</td>
+                                    <td>$${item.price.toFixed(2)}</td>
+                                    <td>${oi.quantity}</td>
+                                    <td>$${(item.price * oi.quantity).toFixed(2)}</td>
+                                </tr>
+                            `;
+                    }
+                });
+                $('#viewOrderItemsTable tbody').html(itemsHtml);
+
+                const subtotal = order.items.reduce((sum, oi) => {
+                    const item = items.find(i => i.id === oi.itemId);
+                    return sum + (item ? item.price * oi.quantity : 0);
+                }, 0);
+                const tax = subtotal * (settings.taxRate / 100);
+                $('#viewOrderSubtotal').text(`$${subtotal.toFixed(2)}`);
+                $('#viewOrderTax').text(`$${tax.toFixed(2)}`);
+                $('#viewOrderTotal').text(`$${order.total.toFixed(2)}`);
+                $('#viewOrderNotes').text(order.notes || 'None');
+
+                $('#viewOrderModal').modal('show');
+            }
+        });
+
+        $(document).on('click', '.edit-order', function() {
+            const id = $(this).data('id');
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                $('#orderId').val(order.id);
+                $('#orderCustomer').html('<option value="" selected disabled>Select customer</option>');
+                customers.forEach(c => {
+                    $('#orderCustomer').append(`<option value="${c.id}" ${c.id === order.customerId ? 'selected' : ''}>${c.name}</option>`);
+                });
+                $('#orderDate').val(order.date);
+                $('#orderNotes').val(order.notes);
+                $('#orderStatus').val(order.status);
+                $('#orderItemsTable tbody').html('');
+                order.items.forEach(oi => {
+                    const item = items.find(i => i.id === oi.itemId);
+                    addOrderItemRow(oi.itemId, oi.quantity, item ? item.price : 0);
+                });
+                $('#newOrderModalLabel').text('Edit Order');
+                $('#saveOrder').text('Update Order');
+                calculateOrderTotal();
+                $('#newOrderModal').modal('show');
+            }
+        });
+
+        $(document).on('click', '.delete-order', function() {
+            const id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const order = orders.find(o => o.id === id);
+                    if (order) {
+                        order.items.forEach(oi => {
+                            const item = items.find(i => i.id === oi.itemId);
+                            if (item) {
+                                item.stock += oi.quantity;
+                                item.sold -= oi.quantity;
+                            }
+                        });
+                    }
+                    orders = orders.filter(o => o.id !== id);
+                    renderOrders();
+                    renderItems();
+                    updateDashboard();
+                    Swal.fire('Deleted!', 'Order has been deleted.', 'success');
+                }
+            });
+        });
+
+        $('#orderSearch').on('keyup', () => renderOrders());
+
+        // Settings management
+        $('#generalSettingsForm').submit(function(e) {
+            e.preventDefault();
+            if (!validateForm('generalSettingsForm')) {
+                showValidationErrors('generalSettingsForm');
+                return;
+            }
+            settings.companyName = $('#companyName').val().trim();
+            settings.companyEmail = $('#companyEmail').val().trim();
+            settings.companyPhone = $('#companyPhone').val().trim();
+            settings.companyAddress = $('#companyAddress').val().trim();
+            Swal.fire('Success', 'General settings updated', 'success');
+        });
+
+        $('#systemSettingsForm').submit(function(e) {
+            e.preventDefault();
+            if (!validateForm('systemSettingsForm')) {
+                showValidationErrors('systemSettingsForm');
+                return;
+            }
+            settings.currency = $('#currencySelect').val();
+            settings.taxRate = parseFloat($('#taxRate').val());
+            settings.dateFormat = $('#dateFormat').val();
+            settings.enableNotifications = $('#enableNotifications').is(':checked');
+            Swal.fire('Success', 'System settings updated', 'success');
+            updateDashboard();
+            renderOrders();
+        });
+
+        // Sidebar navigation
+        const lastActivePage = localStorage.getItem('activePageId');
+        if (lastActivePage) {
+            $('.page-section').removeClass('active');
+            $(`#${lastActivePage}`).addClass('active');
+            $('.sidebar-menu li').removeClass('active');
+            $(`.sidebar-menu li[data-page="${lastActivePage}"]`).addClass('active');
+        }
+
+        $('.sidebar-menu li').click(function() {
+            const pageId = $(this).data('page');
+            $('.sidebar-menu li').removeClass('active');
+            $(this).addClass('active');
+            $('.page-section').removeClass('active');
+            $('#' + pageId).addClass('active');
+            localStorage.setItem('activePageId', pageId);
+
+            if ($(window).width() < 768) {
+                $('#sidebar').removeClass('active');
+                $('#content').removeClass('active');
+            }
+
+            // Render appropriate page
+            if (pageId === 'dashboard') updateDashboard();
+            else if (pageId === 'customer-management') renderCustomers();
+            else if (pageId === 'store-management') renderItems();
+            else if (pageId === 'invoice-management') renderOrders();
+        });
+
+        $('#toggle-sidebar').click(function() {
+            $('#sidebar').toggleClass('active');
+            $('#content').toggleClass('active');
+        });
+
+        // Initial render
+        updateDashboard();
+        renderCustomers();
+        renderItems();
+        renderOrders();
+    });
+</script>
+
 <!-- Footer -->
 <footer style="text-align: center; padding: 1rem; background-color: #f5f5f5; font-size: 0.9rem; margin-top: auto;">
     <p>Developed by <strong>Dinidu Sachintha</strong> &nbsp;|&nbsp; © 2025 All rights reserved</p>
 </footer>
-  
 </body>
 </html>
