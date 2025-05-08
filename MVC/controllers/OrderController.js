@@ -40,7 +40,7 @@ export default class OrderController {
                 return false;
             }
             if (item.quantity > dbItem.stock) {
-                Swal.fire('Error', `Insufficient stock for ${item.name}.`, 'error');
+                Swal.fire('Error', `Order quantity (${item.quantity}) for ${item.name} exceeds available stock (${dbItem.stock}).`, 'error');
                 return false;
             }
             subtotal += dbItem.price * item.quantity;
@@ -89,6 +89,10 @@ export default class OrderController {
             }
             if (item.quantity <= 0) {
                 Swal.fire('Error', `Quantity for ${item.name} must be positive.`, 'error');
+                return false;
+            }
+            if (item.quantity > dbItem.stock) {
+                Swal.fire('Error', `Order quantity (${item.quantity}) for ${item.name} exceeds available stock (${dbItem.stock}).`, 'error');
                 return false;
             }
             subtotal += dbItem.price * item.quantity;

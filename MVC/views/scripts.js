@@ -271,7 +271,7 @@ $(document).ready(function() {
             const currentItem = $(this).val();
             $(this).empty().append('<option value="" selected disabled>Select item</option>');
             items.forEach(i => {
-                $(this).append(`<option value="${i.code}" data-price="${i.price}">${i.name}</option>`);
+                $(this).append(`<option value="${i.code}" data-price="${i.price}" data-stock="${i.stock}">${i.name} (Stock: ${i.stock})</option>`);
             });
             if (currentItem) {
                 $(this).val(currentItem);
@@ -286,17 +286,18 @@ $(document).ready(function() {
 
     function getOrderItemRow(items, selectedItem = null, quantity = 1) {
         const price = selectedItem ? ItemController.getItemByCode(selectedItem.code)?.price || 0 : 0;
+        const stock = selectedItem ? ItemController.getItemByCode(selectedItem.code)?.stock || 0 : 0;
         return `
             <tr>
                 <td>
                     <select class="form-select item-select">
                         <option value="" ${!selectedItem ? 'selected' : ''} disabled>Select item</option>
-                        ${items.map(i => `<option value="${i.code}" data-price="${i.price}" ${selectedItem && i.code === selectedItem.code ? 'selected' : ''}>${i.name}</option>`).join('')}
+                        ${items.map(i => `<option value="${i.code}" data-price="${i.price}" data-stock="${i.stock}" ${selectedItem && i.code === selectedItem.code ? 'selected' : ''}>${i.name} (Stock: ${i.stock})</option>`).join('')}
                     </select>
                 </td>
                 <td class="item-price">$${price.toFixed(2)}</td>
                 <td>
-                    <input type="number" class="form-control item-quantity" value="${quantity}" min="1">
+                    <input type="number" class="form-control item-quantity" value="${quantity}" min="1" max="${stock}">
                 </td>
                 <td class="item-total">$${(price * quantity).toFixed(2)}</td>
                 <td>
@@ -311,30 +312,49 @@ $(document).ready(function() {
     $('#addOrderItem').click(function() {
         const items = ItemController.getAllItems();
         $('#orderItemsTable tbody').append(getOrderItemRow(items));
+        validateOrderItems();
     });
 
     $(document).on('click', '.remove-item', function() {
         if ($('#orderItemsTable tbody tr').length > 1) {
             $(this).closest('tr').remove();
             calculateOrderTotal();
+            validateOrderItems();
         }
     });
 
     $(document).on('change', '.item-select', function() {
         const row = $(this).closest('tr');
         const price = parseFloat($(this).find('option:selected').data('price') || 0);
+        const stock = parseInt($(this).find('option:selected').data('stock') || 0);
         row.find('.item-price').text('$' + price.toFixed(2));
-        const quantity = parseInt(row.find('.item-quantity').val());
-        row.find('.item-total').text('$' + (price * quantity).toFixed(2));
+        const quantityInput = row.find('.item-quantity');
+        quantityInput.attr('max', stock);
+        const quantity = parseInt(quantityInput.val());
+        if (quantity > stock) {
+            quantityInput.val(stock);
+        }
+        row.find('.item-total').text('$' + (price * (quantity > stock ? stock : quantity)).toFixed(2));
         calculateOrderTotal();
+        validateOrderItems();
     });
 
-    $(document).on('change', '.item-quantity', function() {
+    $(document).on('change input', '.item-quantity', function() {
         const row = $(this).closest('tr');
         const price = parseFloat(row.find('.item-price').text().replace('$', ''));
-        const quantity = parseInt($(this).val());
+        const stock = parseInt(row.find('.item-select option:selected').data('stock') || 0);
+        let quantity = parseInt($(this).val());
+        if (quantity > stock) {
+            quantity = stock;
+            $(this).val(stock);
+        }
+        if (quantity < 1) {
+            quantity = 1;
+            $(this).val(1);
+        }
         row.find('.item-total').text('$' + (price * quantity).toFixed(2));
         calculateOrderTotal();
+        validateOrderItems();
     });
 
     function calculateOrderTotal() {
@@ -351,7 +371,34 @@ $(document).ready(function() {
         $('#total').text('$' + total.toFixed(2));
     }
 
+    function validateOrderItems() {
+        let isValid = true;
+        const itemCounts = {};
+        $('#orderItemsTable tbody tr').each(function() {
+            const code = $(this).find('.item-select').val();
+            const quantity = parseInt($(this).find('.item-quantity').val()) || 0;
+            if (code) {
+                itemCounts[code] = (itemCounts[code] || 0) + quantity;
+            }
+        });
+
+        for (const code in itemCounts) {
+            const item = ItemController.getItemByCode(code);
+            if (item && itemCounts[code] > item.stock) {
+                isValid = false;
+                Swal.fire('Error', `Quantity for ${item.name} exceeds available stock (${item.stock}).`, 'error');
+            }
+        }
+
+        $('#saveOrder').prop('disabled', !isValid);
+        return isValid;
+    }
+
     $('#saveOrder').click(function() {
+        if (!validateOrderItems()) {
+            return;
+        }
+
         const customerId = $('#orderCustomer').val();
         const customer = $('#orderCustomer option:selected').text();
         const date = $('#orderDate').val();
@@ -409,6 +456,7 @@ $(document).ready(function() {
 
             // Calculate totals
             calculateOrderTotal();
+            validateOrderItems();
 
             // Show modal
             $('#newOrderModal').modal('show');
