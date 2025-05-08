@@ -89,6 +89,7 @@ $(document).ready(function() {
                 $('#addCustomerModalLabel').text('Add New Customer');
                 $('#customerForm').removeData('edit-id');
                 renderCustomers();
+                renderOrders(false);
                 updateDashboard();
             }
         } else {
@@ -97,6 +98,7 @@ $(document).ready(function() {
                 $('#addCustomerModal').modal('hide');
                 $('#customerForm')[0].reset();
                 renderCustomers();
+                renderOrders(false);
                 updateDashboard();
             }
         }
@@ -127,6 +129,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 if (CustomerController.deleteCustomer(id)) {
                     renderCustomers();
+                    renderOrders(false);
                     updateDashboard();
                 }
             }
@@ -180,6 +183,7 @@ $(document).ready(function() {
                 $('#addItemModalLabel').text('Add New Item');
                 $('#itemForm').removeData('edit-code');
                 renderItems();
+                renderOrders(false);
                 updateDashboard();
             }
         } else {
@@ -188,6 +192,7 @@ $(document).ready(function() {
                 $('#addItemModal').modal('hide');
                 $('#itemForm')[0].reset();
                 renderItems();
+                renderOrders(false);
                 updateDashboard();
             }
         }
@@ -219,6 +224,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 if (ItemController.deleteItem(code)) {
                     renderItems();
+                    renderOrders(false);
                     updateDashboard();
                 }
             }
@@ -233,41 +239,61 @@ $(document).ready(function() {
     });
 
     // Order Management
-    function renderOrders() {
-        const orders = OrderController.getAllOrders();
-        const tbody = $('#orderTableBody');
-        tbody.empty();
-        orders.forEach(o => {
-            tbody.append(`
-                <tr>
-                    <td>${o.id}</td>
-                    <td>${o.customer}</td>
-                    <td>${o.date}</td>
-                    <td>$${o.total.toFixed(2)}</td>
-                    <td><span class="badge bg-${o.status === 'Completed' ? 'success' : o.status === 'Pending' ? 'warning' : 'danger'}">${o.status}</span></td>
-                    <td>
-                        <button class="btn btn-sm btn-primary btn-action edit-order" data-id="${o.id}">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger btn-action delete-order" data-id="${o.id}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `);
-        });
+    function renderOrders(updateTable = true) {
+        if (updateTable) {
+            const orders = OrderController.getAllOrders();
+            const tbody = $('#orderTableBody');
+            tbody.empty();
+            orders.forEach(o => {
+                tbody.append(`
+                    <tr>
+                        <td>${o.id}</td>
+                        <td>${o.customer}</td>
+                        <td>${o.date}</td>
+                        <td>$${o.total.toFixed(2)}</td>
+                        <td><span class="badge bg-${o.status === 'Completed' ? 'success' : o.status === 'Pending' ? 'warning' : 'danger'}">${o.status}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary btn-action edit-order" data-id="${o.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger btn-action delete-order" data-id="${o.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `);
+            });
+        }
 
-        // Update order modal customer dropdown
+        // Update customer dropdown
         const customers = CustomerController.getAllCustomers();
         const customerSelect = $('#orderCustomer');
+        const currentCustomer = customerSelect.val();
         customerSelect.empty().append('<option value="" selected disabled>Select customer</option>');
         customers.forEach(c => {
             customerSelect.append(`<option value="${c.id}">${c.name}</option>`);
         });
+        if (currentCustomer) {
+            customerSelect.val(currentCustomer);
+        }
 
-        // Update order modal item dropdown
+        // Update item dropdowns
         const items = ItemController.getAllItems();
-        $('#orderItemsTable tbody').empty().append(getOrderItemRow(items));
+        $('.item-select').each(function() {
+            const currentItem = $(this).val();
+            $(this).empty().append('<option value="" selected disabled>Select item</option>');
+            items.forEach(i => {
+                $(this).append(`<option value="${i.code}" data-price="${i.price}">${i.name}</option>`);
+            });
+            if (currentItem) {
+                $(this).val(currentItem);
+            }
+        });
+
+        // Add one item row if none exist
+        if ($('#orderItemsTable tbody tr').length === 0) {
+            $('#orderItemsTable tbody').empty().append(getOrderItemRow(items));
+        }
     }
 
     function getOrderItemRow(items) {
