@@ -28,7 +28,7 @@ export default class OrderController {
             return false;
         }
 
-        let total = 0;
+        let subtotal = 0;
         for (const item of orderItems) {
             const dbItem = items.find(i => i.code === item.code);
             if (!dbItem) {
@@ -43,8 +43,12 @@ export default class OrderController {
                 Swal.fire('Error', `Insufficient stock for ${item.name}.`, 'error');
                 return false;
             }
-            total += dbItem.price * item.quantity;
+            subtotal += dbItem.price * item.quantity;
         }
+
+        const taxRate = 0.075;
+        const tax = subtotal * taxRate;
+        const total = subtotal + tax;
 
         const id = `#ORD-${new Date().getFullYear()}-${String(orders.length + 1).padStart(3, '0')}`;
         const newOrder = { id, customer, date, items: orderItems, total, status: 'Pending' };
@@ -57,6 +61,7 @@ export default class OrderController {
         }
 
         Swal.fire('Success', 'Order created successfully!', 'success');
+        console.log(newOrder);
         return true;
     }
 
@@ -75,7 +80,7 @@ export default class OrderController {
             return false;
         }
 
-        let total = 0;
+        let subtotal = 0;
         for (const item of orderItems) {
             const dbItem = items.find(i => i.code === item.code);
             if (!dbItem) {
@@ -86,8 +91,12 @@ export default class OrderController {
                 Swal.fire('Error', `Quantity for ${item.name} must be positive.`, 'error');
                 return false;
             }
-            total += dbItem.price * item.quantity;
+            subtotal += dbItem.price * item.quantity;
         }
+
+        const taxRate = 0.075;
+        const tax = subtotal * taxRate;
+        const total = subtotal + tax;
 
         const order = orders.find(o => o.id === id);
         if (!order) {
