@@ -1,0 +1,108 @@
+.sidebar {
+    height: 100vh;
+    background-color: #212529;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background-color: #0d6efd;
+}
+
+.sidebar-menu {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-menu li {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.sidebar-menu li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu li.active {
+    background-color: #0d6efd;
+}
+
+.sidebar-menu li i {
+    margin-right: 10px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.btn-action {
+    margin-right: 5px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        padding: 0;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    .sidebar.active {
+        width: 250px;
+    }
+
+    .content.active {
+        margin-left: 250px;
+    }
+}
+
+.page-section {
+    display: none;
+}
+
+.page-section.active {
+    display: block;
+}
+
+.order-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.toggle-sidebar {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 101;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .toggle-sidebar {
+        display: block;
+    }
+}
